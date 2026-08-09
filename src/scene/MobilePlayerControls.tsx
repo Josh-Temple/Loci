@@ -6,7 +6,7 @@ import type { MobileInputState } from './mobileInput'
 
 const WALK_SPEED = 3
 const PLAYER_HEIGHT = 1.65
-const WORLD_LIMIT = 5.5
+const WORLD_LIMIT = 6.5
 const LOOK_SENSITIVITY = 0.004
 
 interface MobilePlayerControlsProps {

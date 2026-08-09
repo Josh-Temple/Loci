@@ -10,10 +10,11 @@ Loci is an experimental, mobile-first web app for testing whether walking throug
 - Evidence level: E0 — hypothesis only
 - Current goal: validate the core memory workflow before adding AI or platform features
 - Primary test: can a user place roughly 10 memories along a fixed route, revisit the route, and recall them later?
-- Implementation: MVP-03 provides mobile touch movement and drag-to-look controls alongside the existing desktop controls; the next implementation target is MVP-04, one fixed route with about 10 distinguishable loci.
+- Implementation: MVP-04 provides one compact fixed route with 10 stable, visually distinct loci while preserving desktop and mobile movement controls.
 - Deployment: https://loci-gamma.vercel.app/
 - MVP-01 verification: Vercel successfully installed dependencies and completed the production build, and the deployed React Three Fiber scene was smoke-tested on an Android phone on 2026-08-09.
 - MVP-03 verification: production build/typecheck/lint passed, the Vercel deployment succeeded, and the deployed mobile controls were verified on a real Android device on 2026-08-09.
+- MVP-04 verification: production build/typecheck/lint and route-data smoke checks passed; visual traversal remains to be confirmed in a WebGL-capable desktop and phone browser.
 - MVP-02 desktop verification remains pending on a real PC browser because the available Cloud Browser could not exercise WebGL or Pointer Lock.
 
 ## MVP
