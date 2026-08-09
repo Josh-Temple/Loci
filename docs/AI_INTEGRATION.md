@@ -27,6 +27,8 @@ interface MemoryAssistant {
 
 The rest of the application should consume `MemoryPlan`, not provider-specific response objects.
 
+AI adapters must return structured memory, placement suggestions, and optional `VisualCue` data. They must not create or mutate Three.js / React Three Fiber scene objects. The application can validate and edit that structured output before an asset resolver maps `VisualCue.assetId` to an `Asset` and the renderer projects it into the scene. This keeps primitives, library models, and possible future generated assets interchangeable behind the same boundary.
+
 ## First AI test
 
 Before connecting any paid API, implement a mock/static `MemoryPlan` import. Confirm that a generated plan can be reviewed and placed into the palace cleanly.
@@ -50,6 +52,8 @@ Future evaluation should compare:
 ## 3D generation
 
 Text-to-3D is a later experiment, not a default dependency. Prefer a small reusable object library plus transforms such as scale, orientation, repetition, and motion. Add generated models only if real use shows that the existing library materially limits mnemonic quality.
+
+Any future generated model should enter the application as an `Asset` with the same contract as primitive and library assets. Generation providers must not become dependencies of memory records or scene components.
 
 ## API cost and credentials
 

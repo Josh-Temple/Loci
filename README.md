@@ -10,6 +10,7 @@ Loci is an experimental, mobile-first web app for testing whether walking throug
 - Evidence level: E0 — hypothesis only
 - Current goal: validate the core memory workflow before adding AI or platform features
 - Primary test: can a user place roughly 10 memories along a fixed route, revisit the route, and recall them later?
+- Implementation: MVP-01 provides the browser application and 3D rendering scaffold; movement and the memory workflow are intentionally not implemented yet.
 
 ## MVP
 
@@ -61,3 +62,12 @@ Do not add these without a separate decision after the core workflow has been te
 Implementation work is tracked as GitHub Issues. Each issue should remain small, include observable acceptance criteria, and be completed without expanding into adjacent features.
 
 Before writing code, read `AGENTS.md` and the relevant issue and documentation.
+
+## Local development
+
+```sh
+npm install
+npm run dev
+```
+
+Use `npm run build`, `npm run typecheck`, and `npm run lint` before submitting changes.
