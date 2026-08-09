@@ -29,11 +29,33 @@ interface MemoryItem {
   id: string
   concept: string
   mnemonic: string
-  objectId?: string
+  visualCue?: VisualCue
 }
 ```
 
-`objectId` is optional during the earliest MVP. Text alone must be enough to test the workflow.
+`visualCue` is optional during the earliest MVP. Text alone must be enough to test the workflow. A memory item remains domain content; it must not contain Three.js or React Three Fiber objects.
+
+## VisualCue and Asset (future boundary)
+
+Visual presentation is separate from both memory content and the resource used to render it. A cue describes presentation, while an asset identifies an interchangeable primitive, library model, or future generated model.
+
+```ts
+interface VisualCue {
+  assetId?: string
+  scale?: number
+  rotation?: [number, number, number]
+  offset?: [number, number, number]
+  animation?: string
+}
+
+interface Asset {
+  id: string
+  source: 'primitive' | 'library' | 'generated'
+  modelUrl?: string
+}
+```
+
+The intended rendering flow is `MemoryItem -> VisualCue -> Asset -> 3D scene`. Scene objects are projections of structured application data, never the source of truth. This boundary lets primitive geometry, a curated asset library, and possible generated assets be resolved by the renderer without changing memory or placement records. These types are future-facing documentation, not an MVP implementation requirement.
 
 ## Placement
 
@@ -99,7 +121,7 @@ interface MemoryPlanItem {
   concept: string
   mnemonic: string
   suggestedLocusId?: string
-  objectId?: string
+  visualCue?: VisualCue
 }
 
 interface MemoryPlan {
