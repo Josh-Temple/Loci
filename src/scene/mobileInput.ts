@@ -2,10 +2,10 @@ export type MobileDirection = 'backward' | 'forward' | 'left' | 'right'
 
 export interface MobileInputState {
   directions: Set<MobileDirection>
-  lookDeltaX: number
-  lookDeltaY: number
+  lookX: number
+  lookY: number
 }
 
 export function createMobileInputState(): MobileInputState {
-  return { directions: new Set(), lookDeltaX: 0, lookDeltaY: 0 }
+  return { directions: new Set(), lookX: 0, lookY: 0 }
 }

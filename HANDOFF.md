@@ -15,6 +15,7 @@
 - Issue #17 (MVP-04R) widened the garden route, separated walking-line coordinates from landmark coordinates, moved major landmarks beside the route, and experimentally changed mobile left/right buttons from strafing to held yaw steering.
 - Real Android use confirmed that the wider route and landmark-beside-path layout are a substantial improvement. Issue #17 is complete as an intermediate refinement; its held-yaw left/right interaction is intentionally superseded by Issue #19.
 - Issue #17 preserves all 10 locus IDs, names, and order values as well as the desktop movement and pointer-lock controls.
+- Issue #19 implements four-way held translation on the left pad and a held, speed-sensitive look joystick with a center dead zone on the right pad. Movement remains normalized diagonally, and release/cancel/lost capture immediately clears look input.
 
 ## Current boundaries
 
@@ -26,24 +27,7 @@
 
 ## Next session
 
-The next implementation target is GitHub Issue #19: `MVP-04S Use four-way movement and held look joystick on mobile`.
-
-This refinement comes directly from Android real-device use after Issue #17. It should be completed and verified before Issue #5.
-
-Required behavior for Issue #19:
-
-1. Left mobile controls return to pure translation: up/down move forward/backward and left/right strafe, with no yaw rotation from the left pad.
-2. Held directional input continues movement until release/cancel, and diagonal movement remains normalized.
-3. The right look area becomes a held virtual joystick rather than a relative drag surface.
-4. While the right thumb is held away from center, camera yaw/pitch continues changing every frame even if the finger itself stops moving.
-5. Right-thumb offset from center controls direction and rotation speed, with a small center dead zone and a capped maximum speed.
-6. Returning near center, pointer up, pointer cancel, or lost pointer capture stops continuous look immediately.
-7. Movement and look must work simultaneously with two thumbs.
-8. Preserve the wider route, separate `ROUTE_POINTS`, landmarks beside the path, all 10 stable locus IDs/names/order values, and existing desktop controls.
-9. Do not begin locus selection, memory editing, persistence, Study/Recall, AI, or other later work.
-10. Deploy and verify the refined behavior on a real Android device before moving to Issue #5.
-
-After Issue #19 passes Android verification, proceed to Issue #5: locus proximity and selection interaction.
+Deploy Issue #19 and verify it on a real Android device before moving to Issue #5. Confirm four-way translation, normalized diagonal movement, continuous held look without finger motion, dead-zone and speed response, immediate stop on release/cancel, and simultaneous two-thumb movement plus look. If these pass, Issue #5 (locus proximity and selection interaction) is the next implementation target.
 
 Issue #2 remains open only because real desktop-browser verification of Pointer Lock, mouse look, and keyboard movement is still pending. The Cloud Browser's lack of WebGL and Pointer Lock support is a verification-environment limitation, not a confirmed application defect. Do not block mobile-first MVP progress solely on that unavailable cloud-browser verification; preserve the existing desktop controls and verify them on a real PC when available.
 
@@ -55,6 +39,6 @@ For MVP-04, `npm run typecheck`, `npm run lint`, `npm run build`, and a focused 
 
 For Issue #17, `npm run typecheck`, `npm run lint`, and `npm run build` passed, and a focused source check confirmed that the same 10 unique locus IDs, names, order values, and kinds remained while route points were separated from landmark positions. Subsequent Android use found the route/readability change substantially better and led to the preferred two-thumb control model now tracked in Issue #19.
 
-For Issue #19, do not treat implementation alone as complete. The held-look behavior specifically requires Android real-device verification because it depends on pointer capture, continuous per-frame input, dead-zone behavior, and simultaneous two-thumb use.
+For Issue #19, `npm run typecheck`, `npm run lint`, `npm run build`, `git diff --check`, and a focused source smoke check passed. Browser screenshot automation was unavailable in the implementation environment. Do not treat implementation alone as complete: the held-look behavior specifically requires Android real-device verification because it depends on pointer capture, continuous per-frame input, dead-zone behavior, and simultaneous two-thumb use.
 
 For Issue #2, dependency installation and configured checks were blocked in the original Codex implementation environment by an npm-registry HTTP 403, and Cloud Browser verification later could not exercise WebGL or Pointer Lock. A real PC browser check is still required for Pointer Lock, mouse look, WASD/arrow movement, Escape release, and desktop regression verification.
