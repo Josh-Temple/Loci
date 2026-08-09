@@ -4,7 +4,7 @@ import { MathUtils, Vector3 } from 'three'
 
 const WALK_SPEED = 3
 const PLAYER_HEIGHT = 1.65
-const WORLD_LIMIT = 5.5
+const WORLD_LIMIT = 6.5
 const LOOK_SENSITIVITY = 0.002
 
 const movementKeys = new Set([

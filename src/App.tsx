@@ -16,7 +16,7 @@ export function App() {
         <h1>Loci</h1>
       </header>
       <section className="scene" aria-label="Walkable 3D memory palace">
-        <Canvas camera={{ position: [0, 1.65, 5], fov: 60 }} dpr={[1, 2]}>
+        <Canvas camera={{ position: [0, 1.65, 6.2], fov: 60 }} dpr={[1, 2]}>
           <WorldScene />
           <DesktopPlayerControls />
           <MobilePlayerControls input={mobileInput} />
