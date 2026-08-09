@@ -8,7 +8,8 @@
 - On 2026-08-09, Vercel successfully installed dependencies and completed the production build, resolving the earlier Codex Cloud npm-registry blocker as an environment-specific problem rather than a repository dependency failure.
 - The deployed 3D scene was smoke-tested on an Android phone and rendered successfully at a phone-sized viewport.
 - MVP-02 adds desktop first-person controls: click-to-lock mouse look, WASD/arrow-key walking, Escape to release the pointer, fixed eye height, and scene-edge movement bounds.
-- MVP-03 implements mobile-only, thumb-sized directional buttons and a separate drag-to-look surface while retaining the desktop control component unchanged.
+- MVP-03 adds mobile-only, thumb-sized directional buttons and a separate drag-to-look surface while retaining the desktop control component unchanged.
+- MVP-03 was verified on a real Android device on 2026-08-09. Forward/back/left/right and diagonal/held movement, horizontal/vertical look, simultaneous movement plus look, input release behavior, and unobtrusive mobile control layout were all confirmed usable on the deployed app.
 
 ## Current boundaries
 
@@ -19,23 +20,22 @@
 
 ## Next session
 
-Issue #2 is implemented and deployed but remains open pending real desktop-browser verification of Pointer Lock, mouse look, and keyboard movement. The Cloud Browser's lack of WebGL and Pointer Lock support is a verification-environment limitation, not a confirmed application defect.
+The next implementation target is GitHub Issue #4: build one compact fixed route with about 10 stable, clearly distinguishable loci.
 
-Issue #3 is implemented and prepared for Vercel deployment and Android real-device testing. On Android, verify all four movement directions, held and diagonal movement, simultaneous left-thumb movement and right-thumb looking, horizontal and vertical look direction/sensitivity, release/cancel behavior (including sliding a thumb off a control), landscape and portrait layout, safe-area spacing, and that the controls leave most of the scene visible.
+Issue #2 remains open only because real desktop-browser verification of Pointer Lock, mouse look, and keyboard movement is still pending. The Cloud Browser's lack of WebGL and Pointer Lock support is a verification-environment limitation, not a confirmed application defect. Do not block mobile-first MVP progress solely on that unavailable cloud-browser verification; preserve the existing desktop controls and verify them on a real PC when available.
 
-Before changing code:
+For Issue #4:
 
-1. Read `AGENTS.md`.
-2. Read the next active issue.
-3. Re-read the relevant product documentation.
-4. Stop after Issue #3; do not begin Issue #4 until Issue #3's Android behaviors have been verified and the next issue is explicitly requested.
+1. Read `AGENTS.md`, Issue #4, `docs/PRODUCT_SPEC.md`, `docs/MVP_PLAN.md`, and `docs/DATA_MODEL.md` before changing code.
+2. Build one fixed environment only, with roughly 10 named loci in a stable traversal order.
+3. Prioritize distinctive silhouette, position, and route legibility over graphical fidelity.
+4. Keep loci/world definitions separate from future memory content and placement data.
+5. Preserve both existing desktop and mobile controls.
+6. Do not add locus selection, memory editing, persistence, Study/Recall, AI, multiple palaces, or procedural generation; those belong to later issues.
+7. Stop after Issue #4 and its verification. Do not begin Issue #5 automatically.
 
 ## Verification note
 
-The earlier Codex Cloud verification attempts failed because the environment proxy returned HTTP 403 for `registry.npmjs.org`. Vercel subsequently installed the dependency set and completed the configured production build successfully. The Android deployment smoke test confirmed that the React Three Fiber scene renders on the deployed app.
+For MVP-03, `npm run typecheck`, `npm run lint`, and `npm run build` completed successfully during implementation. The latest Vercel deployment also succeeded. Android real-device testing then confirmed the mobile controls described above, so Issue #3 is complete.
 
-`npm run lint` was not independently confirmed during the Vercel deployment evidence shared on 2026-08-09. Future implementation work should continue to run the repository's configured checks when the execution environment permits them.
-
-For Issue #2, dependency installation and the configured checks could not run in the implementation environment because the npm registry returned HTTP 403. Pointer lock and keyboard movement therefore still need a desktop-browser smoke test after dependencies can be installed or the change is deployed. The control hint is intentionally hidden below 600px because mobile controls remain a separate issue.
-
-For Issue #3, the available local dependencies allowed `npm run typecheck`, `npm run lint`, and `npm run build` to complete. This environment has no browser binary for an interactive WebGL/touch smoke test, so the Android behaviors listed above remain pending and must not be treated as verified.
+For Issue #2, dependency installation and configured checks were blocked in the original Codex implementation environment by an npm-registry HTTP 403, and Cloud Browser verification later could not exercise WebGL or Pointer Lock. A real PC browser check is still required for Pointer Lock, mouse look, WASD/arrow movement, Escape release, and desktop regression verification.
