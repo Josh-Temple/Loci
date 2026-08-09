@@ -1,5 +1,5 @@
 import type { WorldLocus } from './world'
-import { LOCI } from './world'
+import { LOCI, ROUTE_POINTS } from './world'
 
 function Landmark({ locus }: { locus: WorldLocus }) {
   const [x, , z] = locus.position
@@ -79,19 +79,19 @@ export function WorldScene() {
     <hemisphereLight args={['#ffffff', '#365314', 1.8]} />
     <directionalLight position={[4, 8, 5]} intensity={2.2} castShadow />
 
-    {LOCI.slice(0, -1).map((locus, index) => {
-      const next = LOCI[index + 1]
-      const dx = next.position[0] - locus.position[0]
-      const dz = next.position[2] - locus.position[2]
-      return <mesh key={`${locus.id}-path`} position={[(locus.position[0] + next.position[0]) / 2, 0.015, (locus.position[2] + next.position[2]) / 2]} rotation={[-Math.PI / 2, 0, -Math.atan2(dz, dx)]}>
-        <planeGeometry args={[Math.hypot(dx, dz) + 0.25, 1.15]} />
+    {ROUTE_POINTS.slice(0, -1).map((point, index) => {
+      const next = ROUTE_POINTS[index + 1]
+      const dx = next[0] - point[0]
+      const dz = next[2] - point[2]
+      return <mesh key={`route-${index}`} position={[(point[0] + next[0]) / 2, 0.015, (point[2] + next[2]) / 2]} rotation={[-Math.PI / 2, 0, -Math.atan2(dz, dx)]}>
+        <planeGeometry args={[Math.hypot(dx, dz) + 0.35, 1.45]} />
         <meshStandardMaterial color="#e7d5b0" />
       </mesh>
     })}
     {LOCI.map((locus) => <Landmark key={locus.id} locus={locus} />)}
 
     <mesh position={[0, -0.04, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-      <planeGeometry args={[14, 14]} />
+      <planeGeometry args={[22, 22]} />
       <meshStandardMaterial color="#65a30d" />
     </mesh>
   </>

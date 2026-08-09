@@ -12,6 +12,8 @@
 - MVP-03 was verified on a real Android device on 2026-08-09. Forward/back/left/right and diagonal/held movement, horizontal/vertical look, simultaneous movement plus look, input release behavior, and unobtrusive mobile control layout were all confirmed usable on the deployed app.
 - MVP-04 replaces the placeholder cube with one compact garden route of 10 stable, named loci. Each locus uses a different primitive-built silhouette and color, and a continuous light path communicates traversal order.
 - MVP-04 was verified on a real Android device: the complete route could be traversed successfully, the loci were distinguishable enough to follow without a map, and mobile performance was usable. Issue #4 is complete.
+- Issue #17 (MVP-04R) changes the mobile left/right buttons from strafing to continuous yaw steering, retains simultaneous forward/backward movement and drag-to-look, and spreads the route across a larger garden with all major landmarks beside a wider walking path.
+- Issue #17 preserves all 10 locus IDs, names, and order values as well as the desktop movement and pointer-lock controls.
 
 ## Current boundaries
 
@@ -22,7 +24,7 @@
 
 ## Next session
 
-The next implementation target is GitHub Issue #17: `MVP-04R Refine mobile turning and route readability`.
+The current verification target is GitHub Issue #17: `MVP-04R Refine mobile turning and route readability`.
 
 This refinement comes from successful real-device use of MVP-04 and should be completed before Issue #5.
 
@@ -38,7 +40,7 @@ Required behavior for Issue #17:
 8. Preserve desktop controls and do not start locus selection, memory editing, persistence, Study/Recall, AI, or other later work.
 9. Deploy and verify the refined behavior on a real Android device before moving to Issue #5.
 
-After Issue #17 passes Android verification, proceed to Issue #5: locus proximity and selection interaction.
+Configured checks and a focused source-data smoke test pass. Real Android verification is still required for held turning, immediate stop on release/cancel, combined movement and turning, drag-to-look, and full-route readability. Do not proceed to Issue #5 until that verification passes.
 
 Issue #2 remains open only because real desktop-browser verification of Pointer Lock, mouse look, and keyboard movement is still pending. The Cloud Browser's lack of WebGL and Pointer Lock support is a verification-environment limitation, not a confirmed application defect. Do not block mobile-first MVP progress solely on that unavailable cloud-browser verification; preserve the existing desktop controls and verify them on a real PC when available.
 
@@ -47,5 +49,7 @@ Issue #2 remains open only because real desktop-browser verification of Pointer 
 For MVP-03, `npm run typecheck`, `npm run lint`, and `npm run build` completed successfully during implementation. The latest Vercel deployment also succeeded. Android real-device testing then confirmed the mobile controls described above, so Issue #3 is complete.
 
 For MVP-04, `npm run typecheck`, `npm run lint`, `npm run build`, and a focused source-data smoke check completed successfully. The source check confirmed 10 unique loci with sequential order values and distinct kinds. Android real-device traversal then confirmed that the route is usable and followable, so Issue #4 is complete. The successful traversal also surfaced two usability improvements now tracked in Issue #17: continuous held turning on the left/right mobile controls, and clearer route geometry with landmarks beside rather than on the path.
+
+For Issue #17, `npm run typecheck`, `npm run lint`, and `npm run build` pass. A focused source check confirms that the same 10 unique locus IDs, names, order values, and kinds remain, and that route points are separate from landmark positions. Browser interaction checks could not be completed in this environment, so Android verification remains open and Issue #17 must not yet be treated as fully verified.
 
 For Issue #2, dependency installation and configured checks were blocked in the original Codex implementation environment by an npm-registry HTTP 403, and Cloud Browser verification later could not exercise WebGL or Pointer Lock. A real PC browser check is still required for Pointer Lock, mouse look, WASD/arrow movement, Escape release, and desktop regression verification.
