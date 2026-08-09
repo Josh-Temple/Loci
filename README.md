@@ -10,11 +10,11 @@ Loci is an experimental, mobile-first web app for testing whether walking throug
 - Evidence level: E0 — hypothesis only
 - Current goal: validate the core memory workflow before adding AI or platform features
 - Primary test: can a user place roughly 10 memories along a fixed route, revisit the route, and recall them later?
-- Implementation: MVP-04 provides one compact fixed route with 10 stable, visually distinct loci while preserving desktop and mobile movement controls.
+- Implementation: MVP-04R provides a clearer fixed route with the same 10 stable loci and held mobile steering while preserving desktop controls.
 - Deployment: https://loci-gamma.vercel.app/
 - MVP-01 verification: Vercel successfully installed dependencies and completed the production build, and the deployed React Three Fiber scene was smoke-tested on an Android phone on 2026-08-09.
 - MVP-03 verification: production build/typecheck/lint passed, the Vercel deployment succeeded, and the deployed mobile controls were verified on a real Android device on 2026-08-09.
-- MVP-04 verification: production build/typecheck/lint and route-data smoke checks passed; visual traversal remains to be confirmed in a WebGL-capable desktop and phone browser.
+- MVP-04R verification: production build/typecheck/lint and route-data smoke checks passed; refined steering and route traversal remain to be confirmed on a real Android device.
 - MVP-02 desktop verification remains pending on a real PC browser because the available Cloud Browser could not exercise WebGL or Pointer Lock.
 
 ## MVP
@@ -83,4 +83,4 @@ Click the 3D scene to capture the pointer, move with <kbd>W</kbd><kbd>A</kbd><kb
 
 ### Mobile controls
 
-Use the directional pad with your left thumb to walk forward, backward, left, or right. Drag the look pad with your right thumb to turn and look up or down.
+Use the directional pad with your left thumb to walk forward or backward and hold left or right to turn. Drag the look pad with your right thumb for free look, especially to look up or down.

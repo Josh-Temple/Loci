@@ -8,8 +8,8 @@ interface MobileControlOverlayProps {
 const directionLabels: Record<MobileDirection, string> = {
   backward: 'Move backward',
   forward: 'Move forward',
-  left: 'Move left',
-  right: 'Move right',
+  left: 'Turn left',
+  right: 'Turn right',
 }
 
 export function MobileControlOverlay({ input }: MobileControlOverlayProps) {

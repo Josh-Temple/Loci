@@ -5,8 +5,9 @@ import { MathUtils, Vector3 } from 'three'
 import type { MobileInputState } from './mobileInput'
 
 const WALK_SPEED = 3
+const TURN_SPEED = 1.8
 const PLAYER_HEIGHT = 1.65
-const WORLD_LIMIT = 6.5
+const WORLD_LIMIT = 10.5
 const LOOK_SENSITIVITY = 0.004
 
 interface MobilePlayerControlsProps {
@@ -46,18 +47,21 @@ export function MobilePlayerControls({ input }: MobilePlayerControlsProps) {
 
     const forward = Number(controls.directions.has('forward')) -
       Number(controls.directions.has('backward'))
-    const right = Number(controls.directions.has('right')) -
-      Number(controls.directions.has('left'))
+    // Left and right are steering controls on touch devices, so a thumb can
+    // keep moving forward while continuously following the route.
+    const heldTurn = Number(controls.directions.has('left')) -
+      Number(controls.directions.has('right'))
+    yaw.current += heldTurn * TURN_SPEED * Math.min(delta, 0.1)
 
-    if (forward === 0 && right === 0 && yaw.current === camera.rotation.y && pitch.current === camera.rotation.x) {
+    if (forward === 0 && heldTurn === 0 && yaw.current === camera.rotation.y && pitch.current === camera.rotation.x) {
       return
     }
 
     camera.rotation.set(pitch.current, yaw.current, 0, 'YXZ')
 
-    if (forward === 0 && right === 0) return
+    if (forward === 0) return
 
-    const movement = new Vector3(right, 0, -forward)
+    const movement = new Vector3(0, 0, -forward)
       .normalize()
       .applyAxisAngle(new Vector3(0, 1, 0), yaw.current)
       .multiplyScalar(WALK_SPEED * Math.min(delta, 0.1))
