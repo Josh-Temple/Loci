@@ -10,7 +10,7 @@ Loci is an experimental, mobile-first web app for testing whether walking throug
 - Evidence level: E0 — hypothesis only
 - Current goal: validate the core memory workflow before adding AI or platform features
 - Primary test: can a user place roughly 10 memories along a fixed route, revisit the route, and recall them later?
-- Implementation: MVP-02 adds desktop walking and mouse-look controls to the browser-based 3D scaffold; mobile controls and the memory workflow are intentionally not implemented yet.
+- Implementation: MVP-03 adds isolated mobile touch movement and drag-to-look controls alongside the existing desktop controls; the memory workflow is intentionally not implemented yet.
 - Deployment: https://loci-gamma.vercel.app/
 - MVP-01 verification: Vercel successfully installed dependencies and completed the production build, and the deployed React Three Fiber scene was smoke-tested on an Android phone on 2026-08-09.
 
@@ -77,3 +77,7 @@ Use `npm run build`, `npm run typecheck`, and `npm run lint` before submitting c
 ### Desktop controls
 
 Click the 3D scene to capture the pointer, move with <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or the arrow keys, and move the mouse to look around. Press <kbd>Esc</kbd> to release the pointer.
+
+### Mobile controls
+
+Use the directional pad with your left thumb to walk forward, backward, left, or right. Drag the look pad with your right thumb to turn and look up or down.
