@@ -101,11 +101,11 @@ body { overflow: hidden; }
     right: max(1rem, env(safe-area-inset-right));
     bottom: max(1rem, env(safe-area-inset-bottom));
     display: grid;
-    width: min(38vw, 10rem);
-    height: 7rem;
+    width: min(34vw, 8rem);
+    aspect-ratio: 1;
     place-items: center;
     border: 1px solid rgb(255 255 255 / 45%);
-    border-radius: 1rem;
+    border-radius: 50%;
     color: rgb(255 255 255 / 85%);
     background: rgb(15 23 42 / 38%);
     font-size: 0.75rem;
@@ -113,5 +113,21 @@ body { overflow: hidden; }
     pointer-events: auto;
     touch-action: none;
     user-select: none;
+  }
+
+  .look-label {
+    color: rgb(255 255 255 / 72%);
+    pointer-events: none;
+  }
+
+  .look-stick {
+    position: absolute;
+    width: 2.75rem;
+    height: 2.75rem;
+    border: 1px solid rgb(255 255 255 / 70%);
+    border-radius: 50%;
+    background: rgb(37 99 235 / 72%);
+    box-shadow: 0 0.15rem 0.5rem rgb(15 23 42 / 45%);
+    pointer-events: none;
   }
 }

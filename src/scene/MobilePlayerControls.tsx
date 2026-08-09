@@ -5,10 +5,16 @@ import { MathUtils, Vector3 } from 'three'
 import type { MobileInputState } from './mobileInput'
 
 const WALK_SPEED = 3
-const TURN_SPEED = 1.8
 const PLAYER_HEIGHT = 1.65
 const WORLD_LIMIT = 10.5
-const LOOK_SENSITIVITY = 0.004
+const MAX_LOOK_SPEED = 1.8
+const LOOK_DEAD_ZONE = 0.12
+
+function applyDeadZone(value: number) {
+  const magnitude = Math.abs(value)
+  if (magnitude <= LOOK_DEAD_ZONE) return 0
+  return Math.sign(value) * (magnitude - LOOK_DEAD_ZONE) / (1 - LOOK_DEAD_ZONE)
+}
 
 interface MobilePlayerControlsProps {
   input: RefObject<MobileInputState>
@@ -36,35 +42,35 @@ export function MobilePlayerControls({ input }: MobilePlayerControlsProps) {
 
     const controls = input.current
 
-    yaw.current -= controls.lookDeltaX * LOOK_SENSITIVITY
+    const frameDelta = Math.min(delta, 0.1)
+    const lookX = applyDeadZone(controls.lookX)
+    const lookY = applyDeadZone(controls.lookY)
+
+    yaw.current -= lookX * MAX_LOOK_SPEED * frameDelta
     pitch.current = MathUtils.clamp(
-      pitch.current - controls.lookDeltaY * LOOK_SENSITIVITY,
+      pitch.current - lookY * MAX_LOOK_SPEED * frameDelta,
       -Math.PI / 2 + 0.05,
       Math.PI / 2 - 0.05,
     )
-    controls.lookDeltaX = 0
-    controls.lookDeltaY = 0
 
     const forward = Number(controls.directions.has('forward')) -
       Number(controls.directions.has('backward'))
-    // Left and right are steering controls on touch devices, so a thumb can
-    // keep moving forward while continuously following the route.
-    const heldTurn = Number(controls.directions.has('left')) -
-      Number(controls.directions.has('right'))
-    yaw.current += heldTurn * TURN_SPEED * Math.min(delta, 0.1)
+    const right = Number(controls.directions.has('right')) -
+      Number(controls.directions.has('left'))
 
-    if (forward === 0 && heldTurn === 0 && yaw.current === camera.rotation.y && pitch.current === camera.rotation.x) {
+    if (forward === 0 && right === 0 && lookX === 0 && lookY === 0 &&
+      yaw.current === camera.rotation.y && pitch.current === camera.rotation.x) {
       return
     }
 
     camera.rotation.set(pitch.current, yaw.current, 0, 'YXZ')
 
-    if (forward === 0) return
+    if (forward === 0 && right === 0) return
 
-    const movement = new Vector3(0, 0, -forward)
+    const movement = new Vector3(right, 0, -forward)
       .normalize()
       .applyAxisAngle(new Vector3(0, 1, 0), yaw.current)
-      .multiplyScalar(WALK_SPEED * Math.min(delta, 0.1))
+      .multiplyScalar(WALK_SPEED * frameDelta)
 
     camera.position.add(movement)
     camera.position.x = MathUtils.clamp(camera.position.x, -WORLD_LIMIT, WORLD_LIMIT)
